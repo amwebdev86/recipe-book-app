@@ -1,4 +1,3 @@
-
 # ![Recipe Book API](./public/recipe-logo.png)
 
 ## ![Work In Progress](./public/wipBadge.svg)
@@ -46,8 +45,10 @@ npm install
 
 ## Post
 
-| api/recipes | create new recipe|
-|api/recipes/:id/ingredients|create new ingredient for specified |
+| endpoint                    | Description                         |
+| --------------------------- | ----------------------------------- |
+| api/recipes                 | create new recipe                   |
+| api/recipes/:id/ingredients | create new ingredient for specified |
 
 ## PUT
 
