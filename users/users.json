@@ -1,0 +1,24 @@
+{
+  "users": [
+    {
+      "id": 1001,
+      "name": "user1",
+      "email": "user1@email.com",
+      "profile": {
+        "img": "",
+        "friends": [{}],
+        "followers": [{}]
+      }
+    },
+    {
+      "id": 2002,
+      "name": "user2",
+      "email": "userw@email.com",
+      "profile": {
+        "img": "",
+        "friends": [{}],
+        "followers": [{}]
+      }
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "cards": [
+    {
+      "name": "My New Recipe ",
+      "description": "data junk.",
+      "course": "Main",
+      "cuisine": "American",
+      "preptime": 10,
+      "cooktime": 25,
+      "marinadetime": 60,
+      "totaltime": 95,
+      "servings": 4,
+      "calories": 318,
+      "creator": "Auroiah",
+      "ingredients": [
+        {
+          "name": "My new Ingredient w ID",
+          "amount": 0,
+          "measurment": "cup",
+          "id": 4556
+        }
+      ],
+      "id": 9375
+    }
+  ]
+}
