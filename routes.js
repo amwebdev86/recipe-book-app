@@ -7,16 +7,19 @@ const { asyncHandler } = require('./utils/index');
 //GET request returns greeting from server.
 router.get('/', (req, res) => {
   res.json({
-    greeting: `Hello welcome to the Recipe Database`,
+    greeting: `Hello welcome to the Recipe API. user /api/v1/recipes to see recipes!`,
   });
 });
-//GET list of recipes /api/recipes _READ
+/**
+ * ********** RECIPES **********
+ */
+//GET all recipes
 router.get('/recipes', async (req, res) => {
   const recipes = await records.getRecipes();
 
   res.json(recipes);
 });
-//GET a single recipe /api/recipes/:id _READ
+//GET a single recipe
 router.get('/recipes/:id', async (req, res) => {
   const id = req.params.id;
   const recipe = await records.getRecipe(id);
@@ -26,20 +29,15 @@ router.get('/recipes/:id', async (req, res) => {
   res.json(recipe);
 });
 
-//GET Random recipe api/recipes/recipe/random
+//GET Random recipe
 router.get(
-  '/recipes/recipe/random',
+  '/recipes/random',
   asyncHandler(async (req, res) => {
     const randomRecipe = await records.getRandomRecipe();
     res.json(randomRecipe);
   })
 );
-
-//GET recipe ingredient list
-/**
- * @router GET
- * Get list of ingredients of a specific recipe
- */
+//get a recipe's ingredients
 router.get(
   '/recipes/:id/ingredients',
   asyncHandler(async (req, res) => {
@@ -48,34 +46,7 @@ router.get(
     res.json(ingredients);
   })
 );
-
-/**
- * @router GET
- * get a list of ingredients in the db.
- */
-router.get(
-  '/ingredients',
-  asyncHandler(async (req, res) => {
-    records.getAllIngredients();
-    res.json({ message: 'hold on...in progress' });
-  })
-);
-
-/**
- * @router GET
- * Get a list of users.
- */
-router.get(
-  '/users',
-  asyncHandler(async (req, res) => {
-    const users = await usersRecords.getUsers();
-    res.json(users);
-  })
-);
-/**
- * ------------------POST ROUTES--------------------------*
- */
-//POST request create new recipe api/recipes/ _CREATE
+//create a recipe
 router.post(
   '/recipes',
   asyncHandler(async (req, res) => {
@@ -90,14 +61,13 @@ router.post(
     }
   })
 );
-
-//POST request to create a new ingredient
+//create a new ingredient for a specific recipe
 router.post(
   '/recipes/:id/ingredients',
   asyncHandler(async (req, res, next) => {
     const id = req.params.id;
-    const ingredientData = req.body;
-    if (
+    const ingredientData = {...req.body};
+    if (//TODO: add express validation.
       !ingredientData.name ||
       !ingredientData.amount ||
       !ingredientData.measurement
@@ -111,38 +81,52 @@ router.post(
     res.status(201).json(ingredient);
   })
 );
-/**
- * ----------------------PUT ROUTES -----------------*
- */
-//PUT request update a recipe api/recipes/:id _UPDATE
 router.put(
   '/recipes/:id',
   asyncHandler(async (req, res, next) => {
     const id = req.params.id;
-    const recipeToUpdate = await records.getRecipe(id);
-    console.log(req.body);
-    //TODO: refactor
-    if (recipeToUpdate) {
-      recipeToUpdate.name = req.body.name;
-      recipeToUpdate.description = req.body.description;
-      recipeToUpdate.course = req.body.course;
-      recipeToUpdate.cuisine = req.body.cuisine;
-      recipeToUpdate.preptime = req.body.preptime;
-      recipeToUpdate.cooktime = req.body.cooktime;
-      recipeToUpdate.marinadetime = req.body.marinadetime;
-      recipeToUpdate.totaltime = req.body.totaltime;
-      recipeToUpdate.servings = req.body.servings;
-      let oldIngredients = [...recipeToUpdate.ingredients];
-      let updatedIngredients = [...oldIngredients, ...req.body.ingredients];
-      recipeToUpdate.ingredients = updatedIngredients;
-
-      await records.updateRecipe(recipeToUpdate);
+    const newInfo = req.body;
+    if (newInfo) {
+      await records.updateRecipe(id, newInfo);
       res.status(204).end();
     } else {
-      res.status(404).json({ message: 'Recipe not found.' });
+      res.status(404).json({ message: 'No data provided to update recipe' });
     }
   })
 );
+/**
+ * ********** INGREDIENTS **********
+ */
+router.get(
+  '/ingredients',
+  asyncHandler(async (req, res) => {
+    let ingredients = await records.getAllIngredients();
+    res.json(ingredients);
+  })
+);
+router.post(
+  '/ingredients',
+  asyncHandler(async (req, res) => {
+    records.createFreeIngredient(req.body);
+    res.json(req.body);
+  })
+);
+
+/**
+ * ********** USERS **********
+ */
+router.get(
+  '/users',
+  asyncHandler(async (req, res) => {
+    const users = await usersRecords.getUsers();
+    res.json(users);
+  })
+);
+
+/**
+ * ----------------------PUT ROUTES -----------------*
+ */
+//PUT request update a recipe api/recipes/:id _UPDATE
 
 //TODO update how this route works.
 router.put(

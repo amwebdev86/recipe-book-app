@@ -32,27 +32,27 @@ npm install
 
 # Endpoints
 
-## GET
+## RECIPES
 
-| endpoint                     | Description                   |
-| ---------------------------- | ----------------------------- |
-| api/recipes                  | list of all available recipes |
-| api/recipes/:id              | returns a recipe by id        |
-| /api/recipes/random          | returns a random recipe       |
-| /api/recipes/:id/ingredients | returns a list of ingredients |
-| /api/ingredients             | returns a list of ingredients |
-| /api/users                   | returns a list of users       |
+| Endpoint                        | Description                                     | Method |
+| ------------------------------- | ----------------------------------------------- | ------ |
+| /api/v1/recipes                 | list of all available recipes                   | GET    |
+| /api/v1/recipes/:id             | returns a recipe by id                          | GET    |
+| /api/v1/recipes/random          | returns a random recipe                         | GET    |
+| /api/v1/recipes                 | create new recipe                               | POST   |
+| /api/v1/recipes/:id             | update specified recipes                        | PUT    |
+| /api/v1/recipes/:id/ingredients | Get a list of ingredients for a specific recipe | GET    |
+| /api/v1/recipes/:id/ingredients | Add an ingredient to list on a specific recipe  | POST   |
 
-## Post
+## INGREDIENTS
 
-| endpoint                    | Description                         |
-| --------------------------- | ----------------------------------- |
-| api/recipes                 | create new recipe                   |
-| api/recipes/:id/ingredients | create new ingredient for specified |
+| Endpoint                          | Description                   | Method |
+| --------------------------------- | ----------------------------- | ------ |
+| /api/v1/ingredients               | returns a list of ingredients | GET    |
+| /api/v1/ingredients/:ingredientId | update specified ingredient   | GET    |
 
-## PUT
+## USERS
 
-| endpoint                      | Description                 |
-| ----------------------------- | --------------------------- |
-| api/recipes/:id               | update specified recipes    |
-| api/ingredients/:ingredientId | update specified ingredient |
+| Endpoint      | Description             | Method |
+| ------------- | ----------------------- | ------ |
+| /api/v1/users | returns a list of users | GET    |

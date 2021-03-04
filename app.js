@@ -5,7 +5,7 @@ const routes = require('./routes');
 
 //-------------------------- Middleware --------------------------------
 app.use(express.json());
-app.use('/api', routes);
+app.use('/api/v1/', routes);
 
 
 /** ------------------ GLOBAL ERROR HANDLING ----------------------*/
